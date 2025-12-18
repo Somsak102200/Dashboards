@@ -2,53 +2,22 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>Google Sheets Data Viewer</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
+    body {
+      margin: 0;
     }
-    th { background: #f4f4f4; }
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
   </style>
 </head>
 <body>
 
-<h2>Dashboard from Google Sheets</h2>
-<table id="data"></table>
-<p id="status">Loading...</p>
-
-<script>
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTN3Lud8DrAgihYG1FupsEJDdS3IjG7nq0UKpBWJAs7-HCdHstw3u8VxJqFo6BzbaIEV_apesLlj9j4/pub?gid=258282479&single=true&output=csv";
-
-fetch(sheetURL)
-  .then(response => {
-    if (!response.ok) throw new Error("HTTP error " + response.status);
-    return response.text();
-  })
-  .then(csv => {
-    document.getElementById("status").textContent = "";
-    const rows = csv.trim().split("\n").map(r => r.split(","));
-    let html = "";
-
-    rows.forEach((row, idx) => {
-      html += "<tr>";
-      row.forEach(col => {
-        html += idx === 0 ? `<th>${col}</th>` : `<td>${col}</td>`;
-      });
-      html += "</tr>";
-    });
-
-    document.getElementById("data").innerHTML = html;
-  })
-  .catch(err => {
-    document.getElementById("status").textContent = "โหลดข้อมูลไม่สำเร็จ: " + err.message;
-    console.error(err);
-  });
-</script>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTN3Lud8DrAgihYG1FupsEJDdS3IjG7nq0UKpBWJAs7-HCdHstw3u8VxJqFo6BzbaIEV_apesLlj9j4/pubhtml?gid=258282479&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 
 </body>
 </html>
