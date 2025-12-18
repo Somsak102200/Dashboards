@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Sheet Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th { background: #f2f2f2; }
+  </style>
+</head>
+<body>
+
+<h2>ข้อมูลจาก Google Sheets</h2>
+<table id="data"></table>
+
+<script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTN3Lud8DrAgihYG1FupsEJDdS3IjG7nq0UKpBWJAs7-HCdHstw3u8VxJqFo6BzbaIEV_apesLlj9j4/pub?gid=258282479&single=true&output=csv";
+
+fetch(sheetURL)
+  .then(res => res.text())
+  .then(text => {
+    const rows = text.trim().split("\n").map(r => r.split(","));
+    let html = "";
+    rows.forEach((row, i) => {
+      html += "<tr>";
+      row.forEach(col => {
+        html += i === 0 ? `<th>${col}</th>` : `<td>${col}</td>`;
+      });
+      html += "</tr>";
+    });
+    document.getElementById("data").innerHTML = html;
+  });
+</script>
+
+</body>
+</html>
